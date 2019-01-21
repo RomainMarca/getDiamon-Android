@@ -13,13 +13,34 @@ public class UserModel {
     private int ruby;
     private int opal;
     private int emerald;
-    private ArrayList<UserModel> friend;
     private Date lastMining;
     private JewelryModel indent1;
     private JewelryModel indent2;
     private JewelryModel indent3;
+    private int totalExchange;
+    private int totalBuilt;
 
-    public UserModel() {
+    public UserModel() {}
+
+    public UserModel(long id, String name, String password,
+                     int money, int diamond, int ruby, int opal,
+                     int emerald, Date lastMining, JewelryModel indent1,
+                     JewelryModel indent2, JewelryModel indent3,
+                     int totalExchange, int totalBuilt) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.money = money;
+        this.diamond = diamond;
+        this.ruby = ruby;
+        this.opal = opal;
+        this.emerald = emerald;
+        this.lastMining = lastMining;
+        this.indent1 = indent1;
+        this.indent2 = indent2;
+        this.indent3 = indent3;
+        this.totalExchange = totalExchange;
+        this.totalBuilt = totalBuilt;
     }
 
     public long getId() {
@@ -86,19 +107,51 @@ public class UserModel {
         this.emerald = emerald;
     }
 
-    public ArrayList<UserModel> getFriend() {
-        return friend;
-    }
-
-    public void setFriend(ArrayList<UserModel> friend) {
-        this.friend = friend;
-    }
-
     public Date getLastMining() {
         return lastMining;
     }
 
-    public void setLastMining(Date lastmining) {
+    public void setLastMining(Date lastMining) {
         this.lastMining = lastMining;
+    }
+
+    public JewelryModel getIndent1() {
+        return indent1;
+    }
+
+    public void setIndent1(JewelryModel indent1) {
+        this.indent1 = indent1;
+    }
+
+    public JewelryModel getIndent2() {
+        return indent2;
+    }
+
+    public void setIndent2(JewelryModel indent2) {
+        this.indent2 = indent2;
+    }
+
+    public JewelryModel getIndent3() {
+        return indent3;
+    }
+
+    public void setIndent3(JewelryModel indent3) {
+        this.indent3 = indent3;
+    }
+
+    public int getTotalExchange() {
+        return totalExchange;
+    }
+
+    public void setTotalExchange(int totalExchange) {
+        this.totalExchange = totalExchange;
+    }
+
+    public int getTotalBuilt() {
+        return totalBuilt;
+    }
+
+    public void setTotalBuilt(int totalBuilt) {
+        this.totalBuilt = totalBuilt;
     }
 }

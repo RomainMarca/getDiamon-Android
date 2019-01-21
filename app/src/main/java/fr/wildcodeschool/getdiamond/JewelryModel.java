@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class JewelryModel {
 
     private long id;
-    private int gemNumber;
+    private String Name;
     private String emplacement1;
     private String emplacement2;
     private String emplacement3;
@@ -25,14 +25,6 @@ public class JewelryModel {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public int getGemNumber() {
-        return gemNumber;
-    }
-
-    public void setGemNumber(int gemNumber) {
-        this.gemNumber = gemNumber;
     }
 
     public String getEmplacement1() {

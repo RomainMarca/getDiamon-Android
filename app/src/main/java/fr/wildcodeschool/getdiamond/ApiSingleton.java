@@ -79,11 +79,6 @@ class ApiSingleton {
                         int opal = userObject.getInt("opal");
                         int emerald = userObject.getInt("emerald");
                         int ruby = userObject.getInt("ruby");
-                        JSONArray friends = userObject.getJSONArray("friend");
-                        for (int j=0; j < friends.length(); j++) {
-                            JSONObject friendJson = friends.getJSONObject(j);
-                            UserModel friend = gson.fromJson(friendJson.toString(), UserModel.class);
-                        }
                         String date = userObject.getString("lastMining");
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                         Date lastMining = null;
@@ -102,8 +97,13 @@ class ApiSingleton {
                         JSONObject jewelryJson3 = userObject.getJSONObject("indent3");
                         JewelryModel indent3 = gson.fromJson(jewelryJson3.toString(), JewelryModel.class);
 
-                        UserModel userJson = new UserModel(id, name, password, money,
-                                diamond, opal, emerald, ruby, friend, lastMining, indent1, indent2, indent3);
+                        int totalExchange = userObject.getInt("totalExchange");
+                        int totalBuilt = userObject.getInt("totalBuilt");
+
+                        UserModel userJson = new UserModel(id, name, password, money, diamond, opal,
+                                emerald, ruby, lastMining, indent1, indent2, indent3,
+                                totalExchange, totalBuilt);
+
                         userList.add(userJson);
                     }
                     listener.onResponse(true);
@@ -122,5 +122,13 @@ class ApiSingleton {
             }
         });
         getRequestQueue().add(jsonObjectRequest);
+    }
+
+    public ArrayList<UserModel> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(ArrayList<UserModel> userList) {
+        this.userList = userList;
     }
 }
