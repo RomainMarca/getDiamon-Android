@@ -5,14 +5,14 @@ import java.util.ArrayList;
 public class JewelryModel {
 
     private long id;
-    private String Name;
+    private String name;
     private int ruby;
     private int emerald;
     private int diamond;
     private int opal;
     private int gain;
     private int resale;
-    private boolean build = false;
+    private boolean built = false;
 
     public JewelryModel() {
     }
@@ -26,11 +26,11 @@ public class JewelryModel {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public int getRuby() {
@@ -81,11 +81,11 @@ public class JewelryModel {
         this.resale = resale;
     }
 
-    public boolean isBuild() {
-        return build;
+    public boolean isBuilt() {
+        return built;
     }
 
-    public void setBuild(boolean build) {
-        this.build = build;
+    public void setBuilt(boolean built) {
+        this.built = built;
     }
 }

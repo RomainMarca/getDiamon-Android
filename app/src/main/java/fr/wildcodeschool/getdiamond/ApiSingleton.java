@@ -34,6 +34,7 @@ class ApiSingleton {
     private static ApiSingleton mInstance;
 
     ArrayList<UserModel> userList = new ArrayList<>();
+    ArrayList<JewelryModel> jewelryList = new ArrayList<>();
 
 /*
     private static final ApiSingleton ourInstance = new ApiSingleton();
@@ -81,6 +82,78 @@ class ApiSingleton {
                         int opal = userObject.getInt("opal");
                         int emerald = userObject.getInt("emerald");
                         int ruby = userObject.getInt("ruby");
+                        String date = userObject.getString("lastMining");
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                        Date lastMining = null;
+                        try {
+                            lastMining = sdf.parse(date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        JewelryModel indent1 = null;
+                        if (!userObject.isNull("indent1")) {
+                            JSONObject jewelryJson = userObject.getJSONObject("indent1");
+                            indent1 = gson.fromJson(jewelryJson.toString(), JewelryModel.class);
+                        }
+
+                        JewelryModel indent2 = null;
+                        if (!userObject.isNull("indent2")) {
+                            JSONObject jewelryJson2 = userObject.getJSONObject("indent2");
+                            indent2 = gson.fromJson(jewelryJson2.toString(), JewelryModel.class);
+                        }
+
+                        JewelryModel indent3 = null;
+                        if (!userObject.isNull("indent3")) {
+                            JSONObject jewelryJson3 = userObject.getJSONObject("indent3");
+                            indent2 = gson.fromJson(jewelryJson3.toString(), JewelryModel.class);
+                        }
+
+                        int totalExchange = userObject.getInt("totalExchange");
+                        int totalBuilt = userObject.getInt("totalBuilt");
+
+                        UserModel userJson = new UserModel(id, name, password, money, diamond, opal,
+                                emerald, ruby, lastMining, indent1, indent2, indent3,
+                                totalExchange, totalBuilt);
+
+                        userList.add(userJson);
+                    }
+                    listener.onResponse(true);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onResponse(false);
+                }
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: " + error.getMessage());
+                listener.onResponse(false);
+            }
+        });
+        getRequestQueue().add(jsonObjectRequest);
+    }
+
+    public void jsonCallJewelry(final ApiListener listener) {
+        String url = API_URL + "jewelry";
+
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+                null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray results) {
+                try {
+
+                    for (int i = 0; i < results.length(); i++) {
+
+                        JSONObject jewelryObject = results.getJSONObject(i);
+                        long id = jewelryObject.getLong("id");
+                        String name = jewelryObject.getString("name");
+                        int diamond = jewelryObject.getInt("diamond");
+                        int opal = jewelryObject.getInt("opal");
+                        int emerald = jewelryObject.getInt("emerald");
+                        int ruby = jewelryObject.getInt("ruby");
                         String date = userObject.getString("lastMining");
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                         Date lastMining = null;
