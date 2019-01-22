@@ -36,6 +36,8 @@ class ApiSingleton {
     ArrayList<UserModel> userList = new ArrayList<>();
     ArrayList<JewelryModel> jewelryList = new ArrayList<>();
 
+    UserModel currentUser;
+
 /*
     private static final ApiSingleton ourInstance = new ApiSingleton();
 
@@ -154,41 +156,14 @@ class ApiSingleton {
                         int opal = jewelryObject.getInt("opal");
                         int emerald = jewelryObject.getInt("emerald");
                         int ruby = jewelryObject.getInt("ruby");
-                        String date = userObject.getString("lastMining");
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                        Date lastMining = null;
-                        try {
-                            lastMining = sdf.parse(date);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                        int gain = jewelryObject.getInt("gain");
+                        int resale = jewelryObject.getInt("resale");
+                        boolean built = jewelryObject.getBoolean("built");
 
-                        JewelryModel indent1 = null;
-                        if (!userObject.isNull("indent1")) {
-                            JSONObject jewelryJson = userObject.getJSONObject("indent1");
-                            indent1 = gson.fromJson(jewelryJson.toString(), JewelryModel.class);
-                        }
+                        JewelryModel jewelryJson = new JewelryModel(id, name, diamond, opal,
+                                emerald, ruby, gain, resale, built);
 
-                        JewelryModel indent2 = null;
-                        if (!userObject.isNull("indent2")) {
-                            JSONObject jewelryJson2 = userObject.getJSONObject("indent2");
-                            indent2 = gson.fromJson(jewelryJson2.toString(), JewelryModel.class);
-                        }
-
-                        JewelryModel indent3 = null;
-                        if (!userObject.isNull("indent3")) {
-                            JSONObject jewelryJson3 = userObject.getJSONObject("indent3");
-                            indent2 = gson.fromJson(jewelryJson3.toString(), JewelryModel.class);
-                        }
-
-                        int totalExchange = userObject.getInt("totalExchange");
-                        int totalBuilt = userObject.getInt("totalBuilt");
-
-                        UserModel userJson = new UserModel(id, name, password, money, diamond, opal,
-                                emerald, ruby, lastMining, indent1, indent2, indent3,
-                                totalExchange, totalBuilt);
-
-                        userList.add(userJson);
+                        jewelryList.add(jewelryJson);
                     }
                     listener.onResponse(true);
 
@@ -216,5 +191,19 @@ class ApiSingleton {
         this.userList = userList;
     }
 
+    public ArrayList<JewelryModel> getJewelryList() {
+        return jewelryList;
+    }
 
+    public void setJewelryList(ArrayList<JewelryModel> jewelryList) {
+        this.jewelryList = jewelryList;
+    }
+
+    public UserModel getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(UserModel currentUser) {
+        this.currentUser = currentUser;
+    }
 }

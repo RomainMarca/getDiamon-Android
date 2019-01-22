@@ -33,6 +33,19 @@ public class JewelryModel {
         this.name = name;
     }
 
+    public JewelryModel(long id, String name, int ruby, int emerald,
+                        int diamond, int opal, int gain, int resale, boolean built) {
+        this.id = id;
+        this.name = name;
+        this.ruby = ruby;
+        this.emerald = emerald;
+        this.diamond = diamond;
+        this.opal = opal;
+        this.gain = gain;
+        this.resale = resale;
+        this.built = built;
+    }
+
     public int getRuby() {
         return ruby;
     }

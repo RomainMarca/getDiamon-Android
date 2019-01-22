@@ -17,9 +17,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(boolean success) {
                 if (success) {
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                } else {
-                    Toast.makeText(MainActivity.this, "error API", Toast.LENGTH_SHORT).show();
+                    apiSingleton.jsonCallJewelry(new ApiListener() {
+                        @Override
+                        public void onResponse(boolean success) {
+                            if (success) {
+                                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                            } else {
+                                Toast.makeText(MainActivity.this, "error API", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             }
         });
