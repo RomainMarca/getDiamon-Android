@@ -26,7 +26,6 @@ import static com.android.volley.VolleyLog.TAG;
 class ApiSingleton {
 
     private final static String API_URL = "http://10.0.2.2:8080/api/";
-    //private final static String API_URL = "http://localhost:8080/api/";
     private static Context mCtx;
     private RequestQueue mRequestQueue;
     Gson gson = new Gson();

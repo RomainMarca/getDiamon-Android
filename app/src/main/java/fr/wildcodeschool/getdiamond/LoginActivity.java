@@ -1,7 +1,10 @@
 package fr.wildcodeschool.getdiamond;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,11 +19,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         final ApiSingleton apiSingleton = ApiSingleton.getInstance(this);
 
-        TextView test = findViewById(R.id.tv_test);
+        Button login = findViewById(R.id.bt_login);
 
-        for (UserModel users: apiSingleton.getUserList()) {
-            user = users.getName();
-        }
-        test.setText(user);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+            }
+        });
     }
 }
