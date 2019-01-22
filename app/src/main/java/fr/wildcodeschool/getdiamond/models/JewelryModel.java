@@ -1,4 +1,4 @@
-package fr.wildcodeschool.getdiamond;
+package fr.wildcodeschool.getdiamond.models;
 
 import java.util.ArrayList;
 

@@ -8,7 +8,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
@@ -20,6 +19,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import fr.wildcodeschool.getdiamond.models.JewelryModel;
+import fr.wildcodeschool.getdiamond.models.UserModel;
 
 import static com.android.volley.VolleyLog.TAG;
 
