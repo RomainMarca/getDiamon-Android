@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
         final ApiSingleton apiSingleton = ApiSingleton.getInstance(this);
 
         apiSingleton.jsonCallUser(new ApiListener() {
+
+
             @Override
             public void onResponse(boolean success) {
                 if (success) {
