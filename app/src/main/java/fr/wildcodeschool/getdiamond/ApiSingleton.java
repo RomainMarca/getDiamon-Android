@@ -26,6 +26,7 @@ import static com.android.volley.VolleyLog.TAG;
 class ApiSingleton {
 
     private final static String API_URL = "http://10.0.2.2:8080/api/";
+    //private final static String API_URL = "http://localhost:8080/api/";
     private static Context mCtx;
     private RequestQueue mRequestQueue;
     Gson gson = new Gson();
@@ -88,14 +89,23 @@ class ApiSingleton {
                             e.printStackTrace();
                         }
 
-                        JSONObject jewelryJson = userObject.getJSONObject("indent1");
-                        JewelryModel indent1 = gson.fromJson(jewelryJson.toString(), JewelryModel.class);
+                        JewelryModel indent1 = null;
+                        if (!userObject.isNull("indent1")) {
+                            JSONObject jewelryJson = userObject.getJSONObject("indent1");
+                            indent1 = gson.fromJson(jewelryJson.toString(), JewelryModel.class);
+                        }
 
-                        JSONObject jewelryJson2 = userObject.getJSONObject("indent2");
-                        JewelryModel indent2 = gson.fromJson(jewelryJson2.toString(), JewelryModel.class);
+                        JewelryModel indent2 = null;
+                        if (!userObject.isNull("indent2")) {
+                            JSONObject jewelryJson2 = userObject.getJSONObject("indent2");
+                            indent2 = gson.fromJson(jewelryJson2.toString(), JewelryModel.class);
+                        }
 
-                        JSONObject jewelryJson3 = userObject.getJSONObject("indent3");
-                        JewelryModel indent3 = gson.fromJson(jewelryJson3.toString(), JewelryModel.class);
+                        JewelryModel indent3 = null;
+                        if (!userObject.isNull("indent3")) {
+                            JSONObject jewelryJson3 = userObject.getJSONObject("indent3");
+                            indent2 = gson.fromJson(jewelryJson3.toString(), JewelryModel.class);
+                        }
 
                         int totalExchange = userObject.getInt("totalExchange");
                         int totalBuilt = userObject.getInt("totalBuilt");
