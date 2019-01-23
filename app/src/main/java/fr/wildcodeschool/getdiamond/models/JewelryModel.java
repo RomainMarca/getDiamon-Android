@@ -1,6 +1,7 @@
 package fr.wildcodeschool.getdiamond.models;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class JewelryModel {
 
@@ -13,6 +14,7 @@ public class JewelryModel {
     private int gain;
     private int resale;
     private boolean built = false;
+    private Date lastBuilt;
 
     public JewelryModel() {
     }
@@ -34,7 +36,7 @@ public class JewelryModel {
     }
 
     public JewelryModel(long id, String name, int ruby, int emerald,
-                        int diamond, int opal, int gain, int resale, boolean built) {
+                        int diamond, int opal, int gain, int resale, boolean built, Date lastBuilt) {
         this.id = id;
         this.name = name;
         this.ruby = ruby;
@@ -44,6 +46,7 @@ public class JewelryModel {
         this.gain = gain;
         this.resale = resale;
         this.built = built;
+        this.lastBuilt = lastBuilt;
     }
 
     public int getRuby() {
@@ -100,5 +103,13 @@ public class JewelryModel {
 
     public void setBuilt(boolean built) {
         this.built = built;
+    }
+
+    public Date getLastBuilt() {
+        return lastBuilt;
+    }
+
+    public void setLastBuilt(Date lastBuilt) {
+        this.lastBuilt = lastBuilt;
     }
 }

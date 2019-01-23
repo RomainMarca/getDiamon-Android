@@ -159,9 +159,16 @@ class ApiSingleton {
                         int gain = jewelryObject.getInt("gain");
                         int resale = jewelryObject.getInt("resale");
                         boolean built = jewelryObject.getBoolean("built");
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                        Date lastBuilt = null;
+                        try {
+                            lastBuilt = sdf.parse(date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
 
                         JewelryModel jewelryJson = new JewelryModel(id, name, diamond, opal,
-                                emerald, ruby, gain, resale, built);
+                                emerald, ruby, gain, resale, built, lastBuilt);
 
                         jewelryList.add(jewelryJson);
                     }
