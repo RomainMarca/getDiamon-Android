@@ -24,16 +24,19 @@ public class LoginActivity extends AppCompatActivity {
         final ApiSingleton apiSingleton = ApiSingleton.getInstance(this);
 
         Button login = findViewById(R.id.bt_login);
-        EditText name = findViewById(R.id.et_name);
-        EditText password = findViewById(R.id.et_password);
+        final EditText name = findViewById(R.id.et_name);
+        final EditText password = findViewById(R.id.et_password);
 
-        final String nameValue = name.getText().toString();
-        final String passwordValue = password.getText().toString();
+        String nameValue = name.getText().toString();
+        String passwordValue = password.getText().toString();
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nameValue.isEmpty() && passwordValue.isEmpty()) {
+                String nameValue = name.getText().toString();
+                String passwordValue = password.getText().toString();
+
+                if (nameValue.isEmpty() || passwordValue.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please, complete all fields.", Toast.LENGTH_SHORT).show();
                 } else {
                     for (UserModel users: apiSingleton.getUserList()) {
