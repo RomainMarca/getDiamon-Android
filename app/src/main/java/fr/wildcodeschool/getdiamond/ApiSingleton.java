@@ -139,7 +139,7 @@ class ApiSingleton {
     }
 
     public void jsonCallJewelry(final ApiListener listener) {
-        String url = API_URL + "jewelry";
+        String url = API_URL + "jewelryfalse";
 
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
                 null, new Response.Listener<JSONArray>() {
@@ -159,6 +159,7 @@ class ApiSingleton {
                         int gain = jewelryObject.getInt("gain");
                         int resale = jewelryObject.getInt("resale");
                         boolean built = jewelryObject.getBoolean("built");
+                        String date = jewelryObject.getString("lastBuilt");
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                         Date lastBuilt = null;
                         try {
