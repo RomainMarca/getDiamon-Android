@@ -37,6 +37,7 @@ class ApiSingleton {
     ArrayList<JewelryModel> jewelryList = new ArrayList<>();
 
     UserModel currentUser;
+    JewelryModel currentJewel;
 
 /*
     private static final ApiSingleton ourInstance = new ApiSingleton();
@@ -213,5 +214,13 @@ class ApiSingleton {
 
     public void setCurrentUser(UserModel currentUser) {
         this.currentUser = currentUser;
+    }
+
+    public JewelryModel getCurrentJewel() {
+        return currentJewel;
+    }
+
+    public void setCurrentJewel(JewelryModel currentJewel) {
+        this.currentJewel = currentJewel;
     }
 }

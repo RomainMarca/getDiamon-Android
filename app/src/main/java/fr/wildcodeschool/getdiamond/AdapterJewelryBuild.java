@@ -6,16 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import fr.wildcodeschool.getdiamond.models.JewelryModel;
 
 
-public class AdapterJewelryBuild extends RecyclerView.Adapter<AdapterJewelryBuild.MyViewHolder> {
+public class AdapterJewelryBuild extends RecyclerView.Adapter<AdapterJewelryBuild.MyViewHolder>
+         {
 
     private List<JewelryModel> jewelryList;
     private Context ctx;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
@@ -71,7 +74,7 @@ public class AdapterJewelryBuild extends RecyclerView.Adapter<AdapterJewelryBuil
     }
 
     public void onClick(View v) {
-        
+
     }
 
 }
