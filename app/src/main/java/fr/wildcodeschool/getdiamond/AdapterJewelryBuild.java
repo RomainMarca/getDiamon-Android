@@ -64,8 +64,6 @@ public class AdapterJewelryBuild extends RecyclerView.Adapter<AdapterJewelryBuil
         holder.diamondInt.setText(String.valueOf(jewelry.getDiamond()));
         holder.rubyInt.setText(String.valueOf(jewelry.getRuby()));
         holder.gainInt.setText(String.valueOf(jewelry.getGain()));
-
-
     }
 
     @Override

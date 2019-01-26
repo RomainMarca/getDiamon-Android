@@ -32,7 +32,6 @@ public class DashboardActivity extends AppCompatActivity {
         opalInt.setText(String.valueOf(apiSingleton.getCurrentUser().getOpal()));
         moneyUser.setText(String.valueOf(apiSingleton.getCurrentUser().getMoney()));
 
-
         Button buildJewelry = findViewById(R.id.bt_build);
         buildJewelry.setOnClickListener(new View.OnClickListener() {
             @Override
