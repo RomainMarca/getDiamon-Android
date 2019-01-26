@@ -27,9 +27,6 @@ public class LoginActivity extends AppCompatActivity {
         final EditText name = findViewById(R.id.et_name);
         final EditText password = findViewById(R.id.et_password);
 
-        String nameValue = name.getText().toString();
-        String passwordValue = password.getText().toString();
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
