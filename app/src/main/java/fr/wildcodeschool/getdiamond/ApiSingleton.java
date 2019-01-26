@@ -8,7 +8,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
@@ -21,6 +20,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import fr.wildcodeschool.getdiamond.models.JewelryModel;
+import fr.wildcodeschool.getdiamond.models.UserModel;
+
 import static com.android.volley.VolleyLog.TAG;
 
 class ApiSingleton {
@@ -32,6 +34,10 @@ class ApiSingleton {
     private static ApiSingleton mInstance;
 
     ArrayList<UserModel> userList = new ArrayList<>();
+    ArrayList<JewelryModel> jewelryList = new ArrayList<>();
+
+    UserModel currentUser;
+    JewelryModel currentJewel;
 
 /*
     private static final ApiSingleton ourInstance = new ApiSingleton();
@@ -79,11 +85,6 @@ class ApiSingleton {
                         int opal = userObject.getInt("opal");
                         int emerald = userObject.getInt("emerald");
                         int ruby = userObject.getInt("ruby");
-                        JSONArray friends = userObject.getJSONArray("friend");
-                        for (int j=0; j < friends.length(); j++) {
-                            JSONObject friendJson = friends.getJSONObject(j);
-                            UserModel friend = gson.fromJson(friendJson.toString(), UserModel.class);
-                        }
                         String date = userObject.getString("lastMining");
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                         Date lastMining = null;
@@ -93,17 +94,31 @@ class ApiSingleton {
                             e.printStackTrace();
                         }
 
-                        JSONObject jewelryJson = userObject.getJSONObject("indent1");
-                        JewelryModel indent1 = gson.fromJson(jewelryJson.toString(), JewelryModel.class);
+                        JewelryModel indent1 = null;
+                        if (!userObject.isNull("indent1")) {
+                            JSONObject jewelryJson = userObject.getJSONObject("indent1");
+                            indent1 = gson.fromJson(jewelryJson.toString(), JewelryModel.class);
+                        }
 
-                        JSONObject jewelryJson2 = userObject.getJSONObject("indent2");
-                        JewelryModel indent2 = gson.fromJson(jewelryJson2.toString(), JewelryModel.class);
+                        JewelryModel indent2 = null;
+                        if (!userObject.isNull("indent2")) {
+                            JSONObject jewelryJson2 = userObject.getJSONObject("indent2");
+                            indent2 = gson.fromJson(jewelryJson2.toString(), JewelryModel.class);
+                        }
 
-                        JSONObject jewelryJson3 = userObject.getJSONObject("indent3");
-                        JewelryModel indent3 = gson.fromJson(jewelryJson3.toString(), JewelryModel.class);
+                        JewelryModel indent3 = null;
+                        if (!userObject.isNull("indent3")) {
+                            JSONObject jewelryJson3 = userObject.getJSONObject("indent3");
+                            indent2 = gson.fromJson(jewelryJson3.toString(), JewelryModel.class);
+                        }
 
-                        UserModel userJson = new UserModel(id, name, password, money,
-                                diamond, opal, emerald, ruby, friend, lastMining, indent1, indent2, indent3);
+                        int totalExchange = userObject.getInt("totalExchange");
+                        int totalBuilt = userObject.getInt("totalBuilt");
+
+                        UserModel userJson = new UserModel(id, name, password, money, diamond, opal,
+                                emerald, ruby, lastMining, indent1, indent2, indent3,
+                                totalExchange, totalBuilt);
+
                         userList.add(userJson);
                     }
                     listener.onResponse(true);
@@ -122,5 +137,90 @@ class ApiSingleton {
             }
         });
         getRequestQueue().add(jsonObjectRequest);
+    }
+
+    public void jsonCallJewelry(final ApiListener listener) {
+        String url = API_URL + "jewelryfalse";
+
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+                null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray results) {
+                try {
+
+                    for (int i = 0; i < results.length(); i++) {
+
+                        JSONObject jewelryObject = results.getJSONObject(i);
+                        long id = jewelryObject.getLong("id");
+                        String name = jewelryObject.getString("name");
+                        int diamond = jewelryObject.getInt("diamond");
+                        int opal = jewelryObject.getInt("opal");
+                        int emerald = jewelryObject.getInt("emerald");
+                        int ruby = jewelryObject.getInt("ruby");
+                        int gain = jewelryObject.getInt("gain");
+                        int resale = jewelryObject.getInt("resale");
+                        boolean built = jewelryObject.getBoolean("built");
+                        String date = jewelryObject.getString("lastBuilt");
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                        Date lastBuilt = null;
+                        try {
+                            lastBuilt = sdf.parse(date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        JewelryModel jewelryJson = new JewelryModel(id, name, diamond, opal,
+                                emerald, ruby, gain, resale, built, lastBuilt);
+
+                        jewelryList.add(jewelryJson);
+                    }
+                    listener.onResponse(true);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onResponse(false);
+                }
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: " + error.getMessage());
+                listener.onResponse(false);
+            }
+        });
+        getRequestQueue().add(jsonObjectRequest);
+    }
+
+    public ArrayList<UserModel> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(ArrayList<UserModel> userList) {
+        this.userList = userList;
+    }
+
+    public ArrayList<JewelryModel> getJewelryList() {
+        return jewelryList;
+    }
+
+    public void setJewelryList(ArrayList<JewelryModel> jewelryList) {
+        this.jewelryList = jewelryList;
+    }
+
+    public UserModel getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(UserModel currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public JewelryModel getCurrentJewel() {
+        return currentJewel;
+    }
+
+    public void setCurrentJewel(JewelryModel currentJewel) {
+        this.currentJewel = currentJewel;
     }
 }
