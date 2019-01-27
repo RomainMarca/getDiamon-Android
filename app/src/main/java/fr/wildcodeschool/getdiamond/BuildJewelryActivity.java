@@ -24,16 +24,16 @@ public class BuildJewelryActivity extends AppCompatActivity {
 
 
         TextView rubyInt = findViewById(R.id.tv_rubyInt);
-        TextView emeraldInt = findViewById(R.id.tv_emeraldInt);
+        final TextView emeraldInt = findViewById(R.id.tv_emeraldInt);
         TextView diamondInt = findViewById(R.id.tv_diamondInt);
         TextView opalInt = findViewById(R.id.tv_opalInt);
-        TextView nameUser = findViewById(R.id.tv_nameUser);
+        TextView moneyUser = findViewById(R.id.tv_moneyUsr);
 
         emeraldInt.setText(String.valueOf(apiSingleton.getCurrentUser().getEmerald()));
         rubyInt.setText(String.valueOf(apiSingleton.getCurrentUser().getRuby()));
         diamondInt.setText(String.valueOf(apiSingleton.getCurrentUser().getDiamond()));
         opalInt.setText(String.valueOf(apiSingleton.getCurrentUser().getOpal()));
-        nameUser.setText(apiSingleton.getCurrentUser().getName());
+        moneyUser.setText(String.valueOf(apiSingleton.getCurrentUser().getMoney()));
 
         //RecyclerView JewelryBuild
         RecyclerView jewelryList = findViewById(R.id.rv_jewelryList);
@@ -49,7 +49,42 @@ public class BuildJewelryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view, int position) {
                 apiSingleton.setCurrentJewel(jewelry.get(position));
-                Toast.makeText(BuildJewelryActivity.this, apiSingleton.getCurrentJewel().getName(), Toast.LENGTH_SHORT).show();
+
+                final String name = apiSingleton.currentJewel.getName();
+                final int money = apiSingleton.getCurrentJewel().getGain();
+
+                final int opalValue = apiSingleton.getCurrentUser().getOpal() -  apiSingleton.getCurrentJewel().getOpal();
+                final int emeraldValue = apiSingleton.getCurrentUser().getEmerald() -  apiSingleton.getCurrentJewel().getEmerald();
+                final int diamondValue = apiSingleton.getCurrentUser().getDiamond() - apiSingleton.getCurrentJewel().getDiamond();
+                final int rubyvalue = apiSingleton.getCurrentUser().getRuby() - apiSingleton.getCurrentJewel().getRuby();
+
+                apiSingleton.jsonUpdateUser(apiSingleton.getCurrentUser(), new ApiListener() {
+                    @Override
+                    public void onResponse(boolean success) {
+                        if (success) {
+                            if (opalValue >= 0 && emeraldValue >= 0 && diamondValue >= 0 && rubyvalue >= 0) {
+                                apiSingleton.getCurrentUser().setOpal(opalValue);
+                                apiSingleton.getCurrentUser().setEmerald(emeraldValue);
+                                apiSingleton.getCurrentUser().setDiamond(diamondValue);
+                                apiSingleton.getCurrentUser().setRuby(rubyvalue);
+                                int moneyValue = apiSingleton.getCurrentUser().getMoney() + money;
+                                apiSingleton.getCurrentUser().setMoney(moneyValue);
+                                int totalbuiltValue = apiSingleton.getCurrentUser().getTotalBuilt() + 1;
+                                apiSingleton.getCurrentUser().setTotalBuilt(totalbuiltValue);
+
+                                apiSingleton.getCurrentJewel().setBuilt(true); //TODO Update by API
+
+                                Toast.makeText(BuildJewelryActivity.this, "Congrat ! You Built "
+                                        + String.valueOf(name) + " for " + String.valueOf(money), Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(BuildJewelryActivity.this, "Sorry, You can't built this jewel...", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(BuildJewelryActivity.this, "API Error Update", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                recreate();
             }
 
             @Override
@@ -58,5 +93,10 @@ public class BuildJewelryActivity extends AppCompatActivity {
             }
         });
         jewelryList.addOnItemTouchListener(listener);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(BuildJewelryActivity.this, DashboardActivity.class));
     }
 }
