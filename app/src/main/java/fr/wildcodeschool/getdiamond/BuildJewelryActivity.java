@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +37,7 @@ public class BuildJewelryActivity extends AppCompatActivity {
         moneyUser.setText(String.valueOf(apiSingleton.getCurrentUser().getMoney()));
 
         //RecyclerView JewelryBuild
-        RecyclerView jewelryList = findViewById(R.id.rv_jewelryList);
+        final RecyclerView jewelryList = findViewById(R.id.rv_jewelryList);
         LinearLayoutManager LayoutManager = new LinearLayoutManager(this);
         jewelryList.setLayoutManager(LayoutManager);
 
@@ -44,11 +45,14 @@ public class BuildJewelryActivity extends AppCompatActivity {
 
         AdapterJewelryBuild adapter = new AdapterJewelryBuild(jewelry, this);
         jewelryList.setAdapter(adapter);
+        jewelryList.setVisibility(View.VISIBLE);
+
 
         RecyclerTouchListener listener = new RecyclerTouchListener(BuildJewelryActivity.this, jewelryList, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 apiSingleton.setCurrentJewel(jewelry.get(position));
+                jewelryList.setVisibility(View.INVISIBLE);
 
                 final String name = apiSingleton.currentJewel.getName();
                 final int money = apiSingleton.getCurrentJewel().getGain();
@@ -77,12 +81,21 @@ public class BuildJewelryActivity extends AppCompatActivity {
                                     public void onResponse(boolean success) {
                                         if (success) {
                                             apiSingleton.getCurrentJewel().setBuilt(true);
-
                                             startActivity(new Intent(BuildJewelryActivity.this, BuildJewelryActivity.class));
 
 
-                                            //Toast.makeText(BuildJewelryActivity.this, "Congrat ! You Built "
-                                                 //   + String.valueOf(name) + " for " + String.valueOf(money), Toast.LENGTH_SHORT).show();
+                                            /*apiSingleton.jsonCallJewelry(new ApiListener() {
+                                                @Override
+                                                public void onResponse(boolean success) {
+                                                    if (success) {
+                                                        jewelry.clear();
+                                                        finish();
+                                                        startActivity(new Intent(BuildJewelryActivity.this, BuildJewelryActivity.class));
+                                                    }
+                                                }
+                                            });*/
+
+
                                         } else {
                                             Toast.makeText(BuildJewelryActivity.this, "API Error Update Jewel", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(BuildJewelryActivity.this, DashboardActivity.class));
@@ -95,7 +108,7 @@ public class BuildJewelryActivity extends AppCompatActivity {
 
                             }
                         } else {
-                            Toast.makeText(BuildJewelryActivity.this, "API Error Update User", Toast.LENGTH_SHORT).show();                                            startActivity(new Intent(BuildJewelryActivity.this, BuildJewelryActivity.class));
+                            Toast.makeText(BuildJewelryActivity.this, "API Error Update User", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(BuildJewelryActivity.this, DashboardActivity.class));
 
                         }
