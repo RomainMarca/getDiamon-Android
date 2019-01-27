@@ -72,19 +72,36 @@ public class BuildJewelryActivity extends AppCompatActivity {
                                 int totalbuiltValue = apiSingleton.getCurrentUser().getTotalBuilt() + 1;
                                 apiSingleton.getCurrentUser().setTotalBuilt(totalbuiltValue);
 
-                                apiSingleton.getCurrentJewel().setBuilt(true); //TODO Update by API
+                                apiSingleton.jsonUpdateJewelry(apiSingleton.getCurrentJewel(), new ApiListener() {
+                                    @Override
+                                    public void onResponse(boolean success) {
+                                        if (success) {
+                                            apiSingleton.getCurrentJewel().setBuilt(true);
 
-                                Toast.makeText(BuildJewelryActivity.this, "Congrat ! You Built "
-                                        + String.valueOf(name) + " for " + String.valueOf(money), Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(BuildJewelryActivity.this, BuildJewelryActivity.class));
+
+
+                                            //Toast.makeText(BuildJewelryActivity.this, "Congrat ! You Built "
+                                                 //   + String.valueOf(name) + " for " + String.valueOf(money), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(BuildJewelryActivity.this, "API Error Update Jewel", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(BuildJewelryActivity.this, DashboardActivity.class));
+                                        }
+                                    }
+                                });
                             }else {
                                 Toast.makeText(BuildJewelryActivity.this, "Sorry, You can't built this jewel...", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(BuildJewelryActivity.this, BuildJewelryActivity.class));
+
                             }
                         } else {
-                            Toast.makeText(BuildJewelryActivity.this, "API Error Update", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BuildJewelryActivity.this, "API Error Update User", Toast.LENGTH_SHORT).show();                                            startActivity(new Intent(BuildJewelryActivity.this, BuildJewelryActivity.class));
+                            startActivity(new Intent(BuildJewelryActivity.this, DashboardActivity.class));
+
                         }
                     }
                 });
-                recreate();
+
             }
 
             @Override
