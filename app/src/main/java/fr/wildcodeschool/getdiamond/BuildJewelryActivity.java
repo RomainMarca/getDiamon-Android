@@ -21,7 +21,7 @@ public class BuildJewelryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_jewelry);
         final ApiSingleton apiSingleton = ApiSingleton.getInstance(this);
-
+        //TODO revoir l'appel des update, le set est automatique...
 
         TextView rubyInt = findViewById(R.id.tv_rubyInt);
         final TextView emeraldInt = findViewById(R.id.tv_emeraldInt);
