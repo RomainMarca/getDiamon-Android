@@ -13,7 +13,7 @@ public class JewelryModel {
     private int opal;
     private int gain;
     private int resale;
-    private boolean built = false;
+    private boolean built;
     private Date lastBuilt;
 
     public JewelryModel() {

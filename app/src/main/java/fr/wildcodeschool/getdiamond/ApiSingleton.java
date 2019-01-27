@@ -260,6 +260,67 @@ class ApiSingleton {
         getRequestQueue().add(putRequest);
     }
 
+    public void jsonUpdateJewelry(JewelryModel currentJewel, final ApiListener listener) {
+        JSONObject jsonBody = new JSONObject();
+        try {
+
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create(); // your format
+            String jsonJewelry = gson.toJson(currentUser);
+            jsonBody = new JSONObject(jsonJewelry);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String mRequestBody = jsonBody.toString();
+
+        String url = API_URL + "jewelry/"+currentJewel.getId();
+
+        StringRequest putRequest = new StringRequest(Request.Method.PUT, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                        listener.onResponse(response.equals("200"));
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                        listener.onResponse(false);
+                    }
+                }
+        ) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
+                    return null;
+                }
+            }
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String responseString = "";
+                if (response != null) {
+                    responseString = String.valueOf(response.statusCode);
+                }
+                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+            }
+        };
+        getRequestQueue().add(putRequest);
+    }
+
 
 
     public ArrayList<UserModel> getUserList() {
