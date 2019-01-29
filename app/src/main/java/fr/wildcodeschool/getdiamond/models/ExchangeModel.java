@@ -21,6 +21,25 @@ public class ExchangeModel {
     public ExchangeModel() {
     }
 
+    public ExchangeModel(Date createDate, boolean accepted,
+                         UserModel asker, int opalAsker, int emeraldAsker,
+                         int diamondAsker, int rubyAsker, UserModel receiver,
+                         int opalReceiver, int emeraldReceiver, int diamondReceiver,
+                         int rubyReceiver) {
+        this.createDate = createDate;
+        this.accepted = accepted;
+        this.asker = asker;
+        this.opalAsker = opalAsker;
+        this.emeraldAsker = emeraldAsker;
+        this.diamondAsker = diamondAsker;
+        this.rubyAsker = rubyAsker;
+        this.receiver = receiver;
+        this.opalReceiver = opalReceiver;
+        this.emeraldReceiver = emeraldReceiver;
+        this.diamondReceiver = diamondReceiver;
+        this.rubyReceiver = rubyReceiver;
+    }
+
     public Long getId() {
         return id;
     }

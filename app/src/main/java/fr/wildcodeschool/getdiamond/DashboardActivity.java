@@ -45,6 +45,14 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
+        Button askExchange = findViewById(R.id.bt_ask);
+        askExchange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardActivity.this, AskListActivity.class));
+            }
+        });
+
         Button minig = findViewById(R.id.bt_mining);
         minig.setOnClickListener(new View.OnClickListener() {
             @Override

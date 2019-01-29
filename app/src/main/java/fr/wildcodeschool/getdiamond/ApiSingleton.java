@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import fr.wildcodeschool.getdiamond.models.ExchangeModel;
 import fr.wildcodeschool.getdiamond.models.JewelryModel;
 import fr.wildcodeschool.getdiamond.models.UserModel;
 
@@ -45,6 +46,7 @@ class ApiSingleton {
 
     UserModel currentUser;
     JewelryModel currentJewel;
+    UserModel currentReceiver;
 
 /*
     private static final ApiSingleton ourInstance = new ApiSingleton();
@@ -321,6 +323,133 @@ class ApiSingleton {
         getRequestQueue().add(putRequest);
     }
 
+    public void jsonAddExchange(ExchangeModel exchange, final ApiListener listener) {
+        JSONObject jsonBody = new JSONObject();
+        try {
+
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create(); // your format
+            String jsonExchange = gson.toJson(exchange);
+            jsonBody = new JSONObject(jsonExchange);
+            // jsonBody.put( "ReleveTache", jsonTache);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String mRequestBody = jsonBody.toString();
+
+        String url = API_URL + "exchange/asker/"+exchange.getAsker().getId()+"/receiver/"+
+                exchange.getReceiver().getId();
+
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+
+                        listener.onResponse(response.equals("200"));
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                        listener.onResponse(false);
+                    }
+                }
+        ) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
+                    return null;
+                }
+            }
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String responseString = "";
+                if (response != null) {
+                    responseString = String.valueOf(response.statusCode);
+                }
+                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+            }
+        };
+        getRequestQueue().add(postRequest);
+    }
+
+    public void jsonUpdateExchange(ExchangeModel exchange, final ApiListener listener) {
+        JSONObject jsonBody = new JSONObject();
+        try {
+
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create(); // your format
+            String jsonExchange = gson.toJson(exchange);
+            jsonBody = new JSONObject(jsonExchange);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String mRequestBody = jsonBody.toString();
+
+        String url = API_URL + "exchange/"+ exchange.getId();
+
+        StringRequest putRequest = new StringRequest(Request.Method.PUT, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                        listener.onResponse(response.equals("200"));
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                        listener.onResponse(false);
+                    }
+                }
+        ) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
+                    return null;
+                }
+            }
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String responseString = "";
+                if (response != null) {
+                    responseString = String.valueOf(response.statusCode);
+                }
+                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+            }
+        };
+        getRequestQueue().add(putRequest);
+    }
 
 
     public ArrayList<UserModel> getUserList() {
@@ -337,6 +466,14 @@ class ApiSingleton {
 
     public void setJewelryList(ArrayList<JewelryModel> jewelryList) {
         this.jewelryList = jewelryList;
+    }
+
+    public UserModel getCurrentReceiver() {
+        return currentReceiver;
+    }
+
+    public void setCurrentReceiver(UserModel currentReceiver) {
+        this.currentReceiver = currentReceiver;
     }
 
     public UserModel getCurrentUser() {

@@ -21,7 +21,10 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".DashboardActivity" />
-        <activity android:name=".BuildJewelryActivity"></activity>
+        <activity android:name=".BuildJewelryActivity" />
+        <activity android:name=".LoadingActivity" />
+        <activity android:name=".AskListActivity" />
+        <activity android:name=".ExchangeCreateActivity"></activity>
     </application>
 
 </manifest>
