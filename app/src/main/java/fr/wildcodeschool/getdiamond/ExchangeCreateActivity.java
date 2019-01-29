@@ -56,7 +56,12 @@ public class ExchangeCreateActivity extends AppCompatActivity {
         diamondIntReceiver.setText(String.valueOf(apiSingleton.getCurrentReceiver().getDiamond()));
         rubyIntReceiver.setText(String.valueOf(apiSingleton.getCurrentReceiver().getRuby()));
 
-
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ExchangeCreateActivity.this, AskListActivity.class));
+            }
+        });
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
