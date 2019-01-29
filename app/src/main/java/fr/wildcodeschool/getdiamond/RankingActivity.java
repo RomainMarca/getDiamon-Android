@@ -43,7 +43,7 @@ public class RankingActivity extends AppCompatActivity {
 
         List<UserModel> user2 = apiSingleton.getUserList();
         Collections.reverse(user2);
-
+        //TODO ranger la list par built
         AdapterRanking adapter2 = new AdapterRanking(user2, this);
         userList2.setAdapter(adapter2);
 
