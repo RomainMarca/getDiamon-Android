@@ -99,7 +99,7 @@ public class DashboardActivity extends AppCompatActivity {
                         int rubyValue = apiSingleton.getCurrentUser().getRuby() + randomNum;
                         apiSingleton.getCurrentUser().setRuby(rubyValue);
                     }
-                        Toast.makeText(DashboardActivity.this, "You mined" + str + " + " +String.valueOf(randomNum), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DashboardActivity.this, "You mined" + String.valueOf(randomNum) + " + " +str, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(DashboardActivity.this, DashboardActivity.class));
 
                         //TODO update API User
