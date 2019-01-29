@@ -9,9 +9,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Date;
 import java.util.List;
 
+import fr.wildcodeschool.getdiamond.adapter.AdapterJewelryBuild;
 import fr.wildcodeschool.getdiamond.models.JewelryModel;
 
 public class BuildJewelryActivity extends AppCompatActivity {

@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import fr.wildcodeschool.getdiamond.models.ExchangeModel;
 import fr.wildcodeschool.getdiamond.models.JewelryModel;
 import fr.wildcodeschool.getdiamond.models.UserModel;
 
@@ -42,9 +43,11 @@ class ApiSingleton {
 
     ArrayList<UserModel> userList = new ArrayList<>();
     ArrayList<JewelryModel> jewelryList = new ArrayList<>();
+    ArrayList<ExchangeModel> exchangeList = new ArrayList<>();
 
     UserModel currentUser;
     JewelryModel currentJewel;
+    UserModel currentReceiver;
 
 /*
     private static final ApiSingleton ourInstance = new ApiSingleton();
@@ -260,6 +263,74 @@ class ApiSingleton {
         getRequestQueue().add(putRequest);
     }
 
+    public void jsonCallExchange(final ApiListener listener) {
+        String url = API_URL + "exchange";
+
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+                null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray results) {
+                try {
+
+                    for (int i = 0; i < results.length(); i++) {
+
+                        JSONObject exchangeObject = results.getJSONObject(i);
+                        long id = exchangeObject.getLong("id");
+                        boolean accepted = exchangeObject.getBoolean("accepted");
+                        int diamondAsker = exchangeObject.getInt("diamondAsker");
+                        int opalAsker = exchangeObject.getInt("opalAsker");
+                        int emeraldAsker = exchangeObject.getInt("emeraldAsker");
+                        int rubyAsker = exchangeObject.getInt("rubyAsker");
+                        int diamondReceiver = exchangeObject.getInt("diamondReceiver");
+                        int opalReceiver = exchangeObject.getInt("opalReceiver");
+                        int emeraldReceiver = exchangeObject.getInt("emeraldReceiver");
+                        int rubyReceiver = exchangeObject.getInt("rubyReceiver");
+
+                        String date = exchangeObject.getString("createDate");
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                        Date createDate = null;
+                        try {
+                            createDate = sdf.parse(date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        UserModel nameAsker = null;
+                        if (!exchangeObject.isNull("nameAsker")) {
+                            JSONObject exchangeJson = exchangeObject.getJSONObject("nameAsker");
+                            nameAsker = gson.fromJson(exchangeJson.toString(), UserModel.class);
+                        }
+
+                        UserModel nameReceive = null;
+                        if (!exchangeObject.isNull("nameReceive")) {
+                            JSONObject exchangeJson1 = exchangeObject.getJSONObject("nameReceive");
+                            nameReceive = gson.fromJson(exchangeJson1.toString(), UserModel.class);
+                        }
+
+                        ExchangeModel exchangeModelJson = new ExchangeModel(id, createDate, accepted, nameReceive, opalAsker, emeraldAsker,
+                                diamondAsker, rubyAsker,nameAsker, opalReceiver, emeraldReceiver, diamondReceiver, rubyReceiver);
+
+                        exchangeList.add(exchangeModelJson);
+                    }
+                    listener.onResponse(true);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onResponse(false);
+                }
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: " + error.getMessage());
+                listener.onResponse(false);
+            }
+        });
+        getRequestQueue().add(jsonObjectRequest);
+    }
+
+
     public void jsonUpdateJewelry(JewelryModel currentJewel, final ApiListener listener) {
         JSONObject jsonBody = new JSONObject();
         try {
@@ -321,6 +392,133 @@ class ApiSingleton {
         getRequestQueue().add(putRequest);
     }
 
+    public void jsonAddExchange(ExchangeModel exchange, final ApiListener listener) {
+        JSONObject jsonBody = new JSONObject();
+        try {
+
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create(); // your format
+            String jsonExchange = gson.toJson(exchange);
+            jsonBody = new JSONObject(jsonExchange);
+            // jsonBody.put( "ReleveTache", jsonTache);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String mRequestBody = jsonBody.toString();
+
+        String url = API_URL + "exchange/asker/"+exchange.getAsker().getId()+"/receiver/"+
+                exchange.getReceiver().getId();
+
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+
+                        listener.onResponse(response.equals("200"));
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                        listener.onResponse(false);
+                    }
+                }
+        ) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
+                    return null;
+                }
+            }
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String responseString = "";
+                if (response != null) {
+                    responseString = String.valueOf(response.statusCode);
+                }
+                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+            }
+        };
+        getRequestQueue().add(postRequest);
+    }
+
+    public void jsonUpdateExchange(ExchangeModel exchange, final ApiListener listener) {
+        JSONObject jsonBody = new JSONObject();
+        try {
+
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create(); // your format
+            String jsonExchange = gson.toJson(exchange);
+            jsonBody = new JSONObject(jsonExchange);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String mRequestBody = jsonBody.toString();
+
+        String url = API_URL + "exchange/"+ exchange.getId();
+
+        StringRequest putRequest = new StringRequest(Request.Method.PUT, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                        listener.onResponse(response.equals("200"));
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                        listener.onResponse(false);
+                    }
+                }
+        ) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
+                    return null;
+                }
+            }
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String responseString = "";
+                if (response != null) {
+                    responseString = String.valueOf(response.statusCode);
+                }
+                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+            }
+        };
+        getRequestQueue().add(putRequest);
+    }
 
 
     public ArrayList<UserModel> getUserList() {
@@ -337,6 +535,22 @@ class ApiSingleton {
 
     public void setJewelryList(ArrayList<JewelryModel> jewelryList) {
         this.jewelryList = jewelryList;
+    }
+
+    public ArrayList<ExchangeModel> getExchangeList() {
+        return exchangeList;
+    }
+
+    public void setExchangeList(ArrayList<ExchangeModel> exchangeList) {
+        this.exchangeList = exchangeList;
+    }
+
+    public UserModel getCurrentReceiver() {
+        return currentReceiver;
+    }
+
+    public void setCurrentReceiver(UserModel currentReceiver) {
+        this.currentReceiver = currentReceiver;
     }
 
     public UserModel getCurrentUser() {
