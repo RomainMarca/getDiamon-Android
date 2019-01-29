@@ -21,11 +21,12 @@ public class ExchangeModel {
     public ExchangeModel() {
     }
 
-    public ExchangeModel(Date createDate, boolean accepted,
+    public ExchangeModel(Long id, Date createDate, boolean accepted,
                          UserModel asker, int opalAsker, int emeraldAsker,
                          int diamondAsker, int rubyAsker, UserModel receiver,
                          int opalReceiver, int emeraldReceiver, int diamondReceiver,
                          int rubyReceiver) {
+        this.id = id;
         this.createDate = createDate;
         this.accepted = accepted;
         this.asker = asker;

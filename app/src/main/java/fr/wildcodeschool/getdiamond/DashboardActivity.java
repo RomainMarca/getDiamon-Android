@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,14 @@ public class DashboardActivity extends AppCompatActivity {
         diamondInt.setText(String.valueOf(apiSingleton.getCurrentUser().getDiamond()));
         opalInt.setText(String.valueOf(apiSingleton.getCurrentUser().getOpal()));
         moneyUser.setText(String.valueOf(apiSingleton.getCurrentUser().getMoney()));
+
+        ImageView ranking = findViewById(R.id.iv_ranking);
+        ranking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardActivity.this, BuildJewelryActivity.class));
+            }
+        });
 
         Button buildJewelry = findViewById(R.id.bt_build);
         buildJewelry.setOnClickListener(new View.OnClickListener() {

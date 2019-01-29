@@ -43,6 +43,7 @@ class ApiSingleton {
 
     ArrayList<UserModel> userList = new ArrayList<>();
     ArrayList<JewelryModel> jewelryList = new ArrayList<>();
+    ArrayList<ExchangeModel> exchangeList = new ArrayList<>();
 
     UserModel currentUser;
     JewelryModel currentJewel;
@@ -262,6 +263,74 @@ class ApiSingleton {
         getRequestQueue().add(putRequest);
     }
 
+    public void jsonCallExchange(final ApiListener listener) {
+        String url = API_URL + "exchange";
+
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+                null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray results) {
+                try {
+
+                    for (int i = 0; i < results.length(); i++) {
+
+                        JSONObject exchangeObject = results.getJSONObject(i);
+                        long id = exchangeObject.getLong("id");
+                        boolean accepted = exchangeObject.getBoolean("accepted");
+                        int diamondAsker = exchangeObject.getInt("diamondAsker");
+                        int opalAsker = exchangeObject.getInt("opalAsker");
+                        int emeraldAsker = exchangeObject.getInt("emeraldAsker");
+                        int rubyAsker = exchangeObject.getInt("rubyAsker");
+                        int diamondReceiver = exchangeObject.getInt("diamondReceiver");
+                        int opalReceiver = exchangeObject.getInt("opalReceiver");
+                        int emeraldReceiver = exchangeObject.getInt("emeraldReceiver");
+                        int rubyReceiver = exchangeObject.getInt("rubyReceiver");
+
+                        String date = exchangeObject.getString("createDate");
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                        Date createDate = null;
+                        try {
+                            createDate = sdf.parse(date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        UserModel nameAsker = null;
+                        if (!exchangeObject.isNull("nameAsker")) {
+                            JSONObject exchangeJson = exchangeObject.getJSONObject("nameAsker");
+                            nameAsker = gson.fromJson(exchangeJson.toString(), UserModel.class);
+                        }
+
+                        UserModel nameReceive = null;
+                        if (!exchangeObject.isNull("nameReceive")) {
+                            JSONObject exchangeJson1 = exchangeObject.getJSONObject("nameReceive");
+                            nameReceive = gson.fromJson(exchangeJson1.toString(), UserModel.class);
+                        }
+
+                        ExchangeModel exchangeModelJson = new ExchangeModel(id, createDate, accepted, nameReceive, opalAsker, emeraldAsker,
+                                diamondAsker, rubyAsker,nameAsker, opalReceiver, emeraldReceiver, diamondReceiver, rubyReceiver);
+
+                        exchangeList.add(exchangeModelJson);
+                    }
+                    listener.onResponse(true);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onResponse(false);
+                }
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: " + error.getMessage());
+                listener.onResponse(false);
+            }
+        });
+        getRequestQueue().add(jsonObjectRequest);
+    }
+
+
     public void jsonUpdateJewelry(JewelryModel currentJewel, final ApiListener listener) {
         JSONObject jsonBody = new JSONObject();
         try {
@@ -466,6 +535,14 @@ class ApiSingleton {
 
     public void setJewelryList(ArrayList<JewelryModel> jewelryList) {
         this.jewelryList = jewelryList;
+    }
+
+    public ArrayList<ExchangeModel> getExchangeList() {
+        return exchangeList;
+    }
+
+    public void setExchangeList(ArrayList<ExchangeModel> exchangeList) {
+        this.exchangeList = exchangeList;
     }
 
     public UserModel getCurrentReceiver() {

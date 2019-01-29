@@ -24,7 +24,9 @@
         <activity android:name=".BuildJewelryActivity" />
         <activity android:name=".LoadingActivity" />
         <activity android:name=".AskListActivity" />
-        <activity android:name=".ExchangeCreateActivity"></activity>
+        <activity android:name=".ExchangeCreateActivity" />
+        <activity android:name=".ShowExchangeActivity" />
+        <activity android:name=".RankingActivity"></activity>
     </application>
 
 </manifest>
