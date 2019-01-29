@@ -88,7 +88,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline34"
         app:layout_constraintTop_toTopOf="@+id/guideline42"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/ruby" />
 
     <EditText
         android:id="@+id/et_ruby"
@@ -120,7 +120,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline42"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/ruby" />
 
     <TextView
         android:id="@+id/tv_rubyR"
@@ -179,7 +179,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline34"
         app:layout_constraintTop_toTopOf="@+id/guideline40"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/diamond" />
 
     <EditText
         android:id="@+id/et_diamond"
@@ -211,7 +211,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline40"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/diamond" />
 
     <TextView
         android:id="@+id/tv_diamondR"
@@ -287,7 +287,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline34"
         app:layout_constraintTop_toTopOf="@+id/guideline46"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/emerald" />
 
     <ImageView
         android:id="@+id/iv_emerald"
@@ -303,7 +303,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline46"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/emerald" />
 
     <TextView
         android:id="@+id/tv_emeraldR"
@@ -346,7 +346,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline34"
         app:layout_constraintTop_toTopOf="@+id/guideline37"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/opal" />
 
     <EditText
         android:id="@+id/et_opalR"
@@ -487,7 +487,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline37"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/opal" />
 
     <EditText
         android:id="@+id/et_opal"

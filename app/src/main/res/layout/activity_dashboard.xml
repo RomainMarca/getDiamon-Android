@@ -13,7 +13,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".DashboardActivity">
+        tools:context=".DashboardActivity"
+        android:background="">
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline2"
@@ -35,6 +36,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="286dp" />
+
+        <ImageView
+            android:id="@+id/tv_backgroud"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/border_yellow"
+            app:layout_constraintBottom_toTopOf="@+id/guideline6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_nameUser"
@@ -74,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="237dp" />
+            app:layout_constraintGuide_end="315dp" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline7"
@@ -102,6 +113,7 @@
             android:gravity="center"
             android:textSize="20sp"
             android:text="int"
+            android:background="@drawable/border_yellow"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="parent"
@@ -125,22 +137,24 @@
             android:id="@+id/iv_opal"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline9"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline8"
             app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@mipmap/ic_launcher_round" />
+            app:srcCompat="@drawable/opal" />
 
         <TextView
             android:id="@+id/tv_money"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="0dp"
             android:gravity="center"
             android:text="Money"
             android:textSize="30sp"
@@ -186,7 +200,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="338dp" />
+            app:layout_constraintGuide_begin="353dp" />
 
         <Button
             android:id="@+id/bt_build"
@@ -246,11 +260,17 @@
             android:id="@+id/iv_emerald"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline9"
             app:layout_constraintEnd_toStartOf="@+id/guideline7"
             app:layout_constraintStart_toEndOf="@+id/iv_opal"
             app:layout_constraintTop_toBottomOf="@+id/tv_emerald"
-            app:srcCompat="@mipmap/ic_launcher_round" />
+            app:srcCompat="@drawable/emerald" />
 
         <TextView
             android:id="@+id/tv_emeraldInt"
@@ -259,6 +279,7 @@
             android:text="int"
             android:gravity="center"
             android:textSize="20sp"
+            android:background="@drawable/border_yellow"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
             app:layout_constraintEnd_toStartOf="@+id/guideline7"
             app:layout_constraintStart_toEndOf="@+id/tv_opalInt"
@@ -268,22 +289,34 @@
             android:id="@+id/iv_diamond"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline9"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintStart_toEndOf="@+id/iv_emerald"
             app:layout_constraintTop_toTopOf="@+id/guideline8"
-            app:srcCompat="@mipmap/ic_launcher_round" />
+            app:srcCompat="@drawable/diamond" />
 
         <ImageView
             android:id="@+id/iv_ruby"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             android:gravity="center"
             app:layout_constraintBottom_toTopOf="@+id/guideline9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_diamond"
             app:layout_constraintTop_toTopOf="@+id/guideline8"
-            app:srcCompat="@mipmap/ic_launcher_round" />
+            app:srcCompat="@drawable/ruby" />
 
         <TextView
             android:id="@+id/tv_diamond"
@@ -311,20 +344,22 @@
 
         <TextView
             android:id="@+id/tv_diamondInt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="int"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/border_yellow"
             android:gravity="center"
+            android:text="int"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintStart_toEndOf="@+id/guideline7"
-            app:layout_constraintTop_toBottomOf="@+id/iv_diamond" />
+            app:layout_constraintTop_toTopOf="@+id/guideline9" />
 
         <TextView
             android:id="@+id/tv_rubyInt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/border_yellow"
             android:gravity="center"
             android:text="int"
             android:textSize="20sp"
@@ -337,7 +372,8 @@
             android:id="@+id/iv_ranking"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline2"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_opal"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -346,7 +382,7 @@
         <TextView
             android:id="@+id/tv_c"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:gravity="center"
