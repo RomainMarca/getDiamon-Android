@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -46,22 +49,64 @@ public class DashboardActivity extends AppCompatActivity {
         minig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    //TODO CONTINUE !
+                    //TODO A revoir les Conditions !!!
 
-                if (apiSingleton.getCurrentUser().getLastMining().after(new Date())  ) {
-                    apiSingleton.getCurrentUser().setLastMining(new Date());
+               SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+               Date lastMining = apiSingleton.getCurrentUser().getLastMining();
+               String lastMiningValue = String.valueOf(lastMining);
+
+                if (lastMining == null) {
+                    lastMiningValue = "01-01-2019";
+                }
+
+               Date toDay = new Date();
+               String toDayValue = String.valueOf(toDay);
+
+               try {
+                   lastMining = sdf.parse(lastMiningValue);
+                   toDay = sdf.parse(toDayValue);
+
+               } catch (ParseException e) {
+                   e.printStackTrace();
+               }
+
+                if (toDay.after(lastMining) && toDay != lastMining)  {
+                    apiSingleton.getCurrentUser().setLastMining(toDay);
+                    //Toast.makeText(DashboardActivity.this, "OK", Toast.LENGTH_SHORT).show();
+
                     int randomNum = 1 + (int)(Math.random() * ((5 - 1) + 1));
                     int randomJewel = 1 + (int)(Math.random() * ((4 - 1) + 1));
+                    String str = "";
+
                     //1=opal ; 2=emerald ; 3=diamond ; 4=ruby
                     if (randomJewel == 1) {
+                        str = "Opal";
                         int opalValue = apiSingleton.getCurrentUser().getOpal() + randomNum;
                         apiSingleton.getCurrentUser().setOpal(opalValue);
                     }
+                    if (randomJewel == 2) {
+                        str = "Emerald";
+                        int emeraldValue = apiSingleton.getCurrentUser().getEmerald() + randomNum;
+                        apiSingleton.getCurrentUser().setEmerald(emeraldValue);
+                    }
+                    if (randomJewel == 3) {
+                        str = "Diamond";
+                        int diamondValue = apiSingleton.getCurrentUser().getDiamond() + randomNum;
+                        apiSingleton.getCurrentUser().setDiamond(diamondValue);
+                    }
+                    if (randomJewel == 4) {
+                        str = "Ruby";
+                        int rubyValue = apiSingleton.getCurrentUser().getRuby() + randomNum;
+                        apiSingleton.getCurrentUser().setRuby(rubyValue);
+                    }
+                        Toast.makeText(DashboardActivity.this, "You mined" + str + " + " +String.valueOf(randomNum), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(DashboardActivity.this, DashboardActivity.class));
 
-                    Toast.makeText(DashboardActivity.this, String.valueOf(apiSingleton.getCurrentUser().getLastMining()), Toast.LENGTH_SHORT).show();
+                        //TODO update API User
+
+                } else {
+                    Toast.makeText(DashboardActivity.this, "Sorry you have mined to day", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
     }

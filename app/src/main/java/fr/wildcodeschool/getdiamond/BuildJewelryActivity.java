@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Date;
 import java.util.List;
 
 import fr.wildcodeschool.getdiamond.models.JewelryModel;
@@ -20,7 +21,6 @@ public class BuildJewelryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_jewelry);
         final ApiSingleton apiSingleton = ApiSingleton.getInstance(this);
-        //TODO revoir l'appel des update, le set est automatique...
 
         TextView rubyInt = findViewById(R.id.tv_rubyInt);
         final TextView emeraldInt = findViewById(R.id.tv_emeraldInt);
@@ -43,14 +43,14 @@ public class BuildJewelryActivity extends AppCompatActivity {
 
         AdapterJewelryBuild adapter = new AdapterJewelryBuild(jewelry, this);
         jewelryList.setAdapter(adapter);
-        jewelryList.setVisibility(View.VISIBLE);
+        //jewelryList.setVisibility(View.VISIBLE);
 
 
         RecyclerTouchListener listener = new RecyclerTouchListener(BuildJewelryActivity.this, jewelryList, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 apiSingleton.setCurrentJewel(jewelry.get(position));
-                jewelryList.setVisibility(View.INVISIBLE);
+                //jewelryList.setVisibility(View.INVISIBLE);
 
                 final String name = apiSingleton.currentJewel.getName();
                 final int money = apiSingleton.getCurrentJewel().getGain();
