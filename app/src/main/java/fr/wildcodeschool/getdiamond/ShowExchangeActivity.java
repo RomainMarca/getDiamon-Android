@@ -56,9 +56,8 @@ public class ShowExchangeActivity extends AppCompatActivity {
         LinearLayoutManager LayoutManager2 = new LinearLayoutManager(this);
         exchangeList2.setLayoutManager(LayoutManager2);
 
-        List<ExchangeModel> exchange2 = apiSingleton.getExchangeList();
         ArrayList<ExchangeModel> yourExchange = new ArrayList<>();
-        for (ExchangeModel exchanges: exchange2) {
+        for (ExchangeModel exchanges: exchange) {
             if (exchanges.getReceiver().getId() == apiSingleton.getCurrentUser().getId()) {
                 yourExchange.add(exchanges);
             }

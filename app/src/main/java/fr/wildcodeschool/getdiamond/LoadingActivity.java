@@ -12,6 +12,14 @@ public class LoadingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_loading);
         ApiSingleton apiSingleton = ApiSingleton.getInstance(this);
 
-
+        apiSingleton.getExchangeList().clear();
+        apiSingleton.jsonCallExchange(new ApiListener() {
+            @Override
+            public void onResponse(boolean success) {
+                if (success) {
+                    startActivity(new Intent(LoadingActivity.this, ShowExchangeActivity.class));
+                }
+            }
+        });
     }
 }
