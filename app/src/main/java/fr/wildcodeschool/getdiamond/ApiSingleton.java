@@ -48,6 +48,7 @@ class ApiSingleton {
     UserModel currentUser;
     JewelryModel currentJewel;
     UserModel currentReceiver;
+    ExchangeModel currentExchange;
 
 /*
     private static final ApiSingleton ourInstance = new ApiSingleton();
@@ -307,7 +308,7 @@ class ApiSingleton {
                             nameReceive = gson.fromJson(exchangeJson1.toString(), UserModel.class);
                         }
 
-                        ExchangeModel exchangeModelJson = new ExchangeModel(id, createDate, accepted, nameReceive, opalAsker, emeraldAsker,
+                        ExchangeModel exchangeModelJson = new ExchangeModel(createDate, accepted, nameReceive, opalAsker, emeraldAsker,
                                 diamondAsker, rubyAsker,nameAsker, opalReceiver, emeraldReceiver, diamondReceiver, rubyReceiver);
 
                         exchangeList.add(exchangeModelJson);
@@ -567,5 +568,13 @@ class ApiSingleton {
 
     public void setCurrentJewel(JewelryModel currentJewel) {
         this.currentJewel = currentJewel;
+    }
+
+    public ExchangeModel getCurrentExchange() {
+        return currentExchange;
+    }
+
+    public void setCurrentExchange(ExchangeModel currentExchange) {
+        this.currentExchange = currentExchange;
     }
 }

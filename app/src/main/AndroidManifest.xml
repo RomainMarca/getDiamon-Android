@@ -26,7 +26,9 @@
         <activity android:name=".AskListActivity" />
         <activity android:name=".ExchangeCreateActivity" />
         <activity android:name=".ShowExchangeActivity" />
-        <activity android:name=".RankingActivity"></activity>
+        <activity android:name=".RankingActivity" />
+        <activity android:name=".MyExchangeActivity" />
+        <activity android:name=".ExchangeWithmeActivity"></activity>
     </application>
 
 </manifest>

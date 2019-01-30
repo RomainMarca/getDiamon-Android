@@ -21,15 +21,15 @@ public class ShowExchangeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_exchange);
-        ApiSingleton apiSingleton = ApiSingleton.getInstance(this);
+        final ApiSingleton apiSingleton = ApiSingleton.getInstance(this);
 
         //my exchange
-        RecyclerView exchangeList = findViewById(R.id.rv_ask_exchange);
+        final RecyclerView exchangeList = findViewById(R.id.rv_ask_exchange);
         LinearLayoutManager LayoutManager = new LinearLayoutManager(this);
         exchangeList.setLayoutManager(LayoutManager);
 
         List<ExchangeModel> exchange = apiSingleton.getExchangeList();
-        ArrayList<ExchangeModel> myExchange = new ArrayList<>();
+        final ArrayList<ExchangeModel> myExchange = new ArrayList<>();
         for (ExchangeModel exchanges: exchange) {
             if (exchanges.getAsker().getId() == apiSingleton.getCurrentUser().getId()) {
                 myExchange.add(exchanges);
@@ -41,7 +41,8 @@ public class ShowExchangeActivity extends AppCompatActivity {
         RecyclerTouchListener listener = new RecyclerTouchListener(ShowExchangeActivity.this, exchangeList, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                //TODO faire unne nouvelle activity pour annulé
+                apiSingleton.setCurrentExchange(myExchange.get(position));
+                startActivity(new Intent(ShowExchangeActivity.this, MyExchangeActivity.class));
             }
 
             @Override
@@ -69,7 +70,8 @@ public class ShowExchangeActivity extends AppCompatActivity {
         RecyclerTouchListener listener2 = new RecyclerTouchListener(ShowExchangeActivity.this, exchangeList2, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                //TODO faire unne nouvelle activity pour choisir oui ou non;
+                apiSingleton.setCurrentExchange(myExchange.get(position));
+                startActivity(new Intent(ShowExchangeActivity.this, ExchangeWithmeActivity.class));
             }
 
             @Override
