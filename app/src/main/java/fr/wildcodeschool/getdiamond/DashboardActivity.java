@@ -38,6 +38,9 @@ public class DashboardActivity extends AppCompatActivity {
         opalInt.setText(String.valueOf(apiSingleton.getCurrentUser().getOpal()));
         moneyUser.setText(String.valueOf(apiSingleton.getCurrentUser().getMoney()));
 
+        final Button minig = findViewById(R.id.bt_mining);
+        minig.setVisibility(View.VISIBLE);
+
         ImageView ranking = findViewById(R.id.iv_ranking);
         ranking.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,11 +73,12 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-        Button minig = findViewById(R.id.bt_mining);
+
         minig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                //minig.setVisibility(View.INVISIBLE);
 
                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                Date lastMining = apiSingleton.getCurrentUser().getLastMining();
@@ -100,7 +104,7 @@ public class DashboardActivity extends AppCompatActivity {
                     apiSingleton.getCurrentUser().setLastMining(toDay);
                     //Toast.makeText(DashboardActivity.this, "OK", Toast.LENGTH_SHORT).show();
 
-                    int randomNum = 1 + (int)(Math.random() * ((5 - 1) + 1));
+                    final int randomNum = 1 + (int)(Math.random() * ((5 - 1) + 1));
                     int randomJewel = 1 + (int)(Math.random() * ((4 - 1) + 1));
                     String str = "";
 
@@ -125,13 +129,24 @@ public class DashboardActivity extends AppCompatActivity {
                         int rubyValue = apiSingleton.getCurrentUser().getRuby() + randomNum;
                         apiSingleton.getCurrentUser().setRuby(rubyValue);
                     }
-                        Toast.makeText(DashboardActivity.this, "You mined" + String.valueOf(randomNum) + " + " +str, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(DashboardActivity.this, DashboardActivity.class));
 
-                        //TODO update API User
+                    final String finalStr = str;
+                    apiSingleton.jsonUpdateUser(apiSingleton.getCurrentUser(), new ApiListener() {
+                        @Override
+                        public void onResponse(boolean success) {
+                            if (success) {
+                                Toast.makeText(DashboardActivity.this, "You mined" + String.valueOf(randomNum) + " + " + finalStr, Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(DashboardActivity.this, DashboardActivity.class));
+                            } else {
+                                Toast.makeText(DashboardActivity.this, "ErrorAPI", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(DashboardActivity.this, DashboardActivity.class));
+                            }
+                        }
+                    });
 
                 } else {
                     Toast.makeText(DashboardActivity.this, "Sorry you have mined to day", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(DashboardActivity.this, DashboardActivity.class));
                 }
             }
         });

@@ -51,4 +51,9 @@ public class AskListActivity extends AppCompatActivity {
         });
         userList.addOnItemTouchListener(listener);
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(AskListActivity.this, DashboardActivity.class));
+    }
 }

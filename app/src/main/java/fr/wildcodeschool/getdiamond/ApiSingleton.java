@@ -207,7 +207,7 @@ class ApiSingleton {
         JSONObject jsonBody = new JSONObject();
         try {
 
-            //Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create(); // your format
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create(); // your format
             String jsonUser = gson.toJson(currentUser);
             jsonBody = new JSONObject(jsonUser);
 
