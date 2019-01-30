@@ -104,20 +104,23 @@ public class ExchangeCreateActivity extends AppCompatActivity {
                         diamondReceiverValueInt < apiSingleton.getCurrentReceiver().getDiamond() &&
                         rubyReceiverValueInt < apiSingleton.getCurrentReceiver().getRuby()) {
 
+                    //TODO for valid exchange
+                    /*
                     int opalAV = apiSingleton.getCurrentUser().getOpal() - opalReceiverValueInt;
                     int emeraldAV = apiSingleton.getCurrentUser().getEmerald() - emeraldReceiverValueInt;
                     int diamondAV = apiSingleton.getCurrentUser().getDiamond() - diamondReceiverValueInt;
                     int rubyAV = apiSingleton.getCurrentUser().getRuby() - rubyReceiverValueInt;
-                    /*apiSingleton.getCurrentUser().setOpal(opalAV);
+                    apiSingleton.getCurrentUser().setOpal(opalAV);
                     apiSingleton.getCurrentUser().setEmerald(emeraldAV);
                     apiSingleton.getCurrentUser().setDiamond(diamondAV);
                     apiSingleton.getCurrentUser().setRuby(rubyAV);*/
 
+                    /*
                     int opalRV = apiSingleton.getCurrentReceiver().getOpal() - opalAskerValueInt;
                     int emeraldRV = apiSingleton.getCurrentReceiver().getEmerald() - emeraldAskerValueInt;
                     int diamondRV = apiSingleton.getCurrentReceiver().getDiamond() - diamondAskerValueInt;
                     int rubyRV = apiSingleton.getCurrentReceiver().getRuby() - rubyAskerValueInt;
-                    /*apiSingleton.getCurrentReceiver().setOpal(opalRV);
+                    apiSingleton.getCurrentReceiver().setOpal(opalRV);
                     apiSingleton.getCurrentReceiver().setEmerald(emeraldRV);
                     apiSingleton.getCurrentReceiver().setDiamond(diamondRV);
                     apiSingleton.getCurrentReceiver().setRuby(rubyRV);*/

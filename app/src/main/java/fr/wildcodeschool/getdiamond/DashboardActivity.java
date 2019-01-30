@@ -42,7 +42,15 @@ public class DashboardActivity extends AppCompatActivity {
         ranking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DashboardActivity.this, BuildJewelryActivity.class));
+                startActivity(new Intent(DashboardActivity.this, RankingActivity.class));
+            }
+        });
+
+        Button showExchange = findViewById(R.id.bt_exchange);
+        showExchange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardActivity.this, LoadingActivity.class));
             }
         });
 
@@ -127,4 +135,7 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {}
 }

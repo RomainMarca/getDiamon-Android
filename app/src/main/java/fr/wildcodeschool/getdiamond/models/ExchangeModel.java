@@ -21,7 +21,7 @@ public class ExchangeModel {
     public ExchangeModel() {
     }
 
-    public ExchangeModel(Long id, Date createDate, boolean accepted,
+    public ExchangeModel(Date createDate, boolean accepted,
                          UserModel asker, int opalAsker, int emeraldAsker,
                          int diamondAsker, int rubyAsker, UserModel receiver,
                          int opalReceiver, int emeraldReceiver, int diamondReceiver,
