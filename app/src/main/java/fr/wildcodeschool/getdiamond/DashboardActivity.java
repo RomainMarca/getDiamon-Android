@@ -78,7 +78,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //minig.setVisibility(View.INVISIBLE);
+                minig.setVisibility(View.INVISIBLE);
 
                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                Date lastMining = apiSingleton.getCurrentUser().getLastMining();
