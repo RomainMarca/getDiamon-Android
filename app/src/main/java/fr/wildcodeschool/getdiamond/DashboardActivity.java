@@ -71,10 +71,10 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
         Button minig = findViewById(R.id.bt_mining);
-        /*minig.setOnClickListener(new View.OnClickListener() {
+        minig.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {*/
-                    //TODO A revoir les Conditions !!!
+            public void onClick(View v) {
+
 
                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                Date lastMining = apiSingleton.getCurrentUser().getLastMining();
@@ -133,8 +133,8 @@ public class DashboardActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(DashboardActivity.this, "Sorry you have mined to day", Toast.LENGTH_SHORT).show();
                 }
-           // }
-       // });
+            }
+        });
     }
 
     @Override

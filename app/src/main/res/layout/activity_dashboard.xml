@@ -85,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="315dp" />
+            app:layout_constraintGuide_begin="254dp" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline7"
@@ -109,11 +109,11 @@
         <TextView
             android:id="@+id/tv_opalInt"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:text="int"
+            android:layout_height="41dp"
             android:background="@drawable/border_yellow"
+            android:gravity="center"
+            android:text="int"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="parent"
